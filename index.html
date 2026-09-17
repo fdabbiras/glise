@@ -163,6 +163,8 @@ a {
         transparent 50%,
         rgba(67, 13, 20, .22)
     );
+
+    pointer-events: none;
 }
 
 
@@ -732,6 +734,7 @@ a {
 
 .gallery-small-grid {
     display: grid;
+
     grid-template-rows: 1fr 1fr;
 
     gap: 17px;
@@ -771,6 +774,8 @@ a {
     height: 465px;
 
     position: relative;
+
+    overflow: visible;
 }
 
 .beauty-photo::before {
@@ -788,6 +793,7 @@ a {
     z-index: 2;
 
     height: 100%;
+
     object-fit: cover;
 }
 
@@ -928,6 +934,7 @@ a {
 
 .contact-button:hover {
     background: var(--cream);
+
     color: var(--burgundy);
 }
 
@@ -941,9 +948,9 @@ a {
 
     color: var(--cream);
 
-    height: 50px;
+    min-height: 50px;
 
-    padding: 0 30px;
+    padding: 10px 30px;
 
     display: flex;
 
@@ -965,6 +972,133 @@ a {
     text-transform: uppercase;
 
     opacity: .4;
+}
+
+
+/* =====================================================
+   IMAGE CURSOR
+===================================================== */
+
+.hero-image img,
+.service-photo img,
+.editorial-image img,
+.gallery-big img,
+.gallery-small img,
+.beauty-photo img {
+    cursor: zoom-in;
+}
+
+
+/* =====================================================
+   IMAGE LIGHTBOX / ZOOM
+===================================================== */
+
+.lightbox {
+    display: none;
+
+    position: fixed;
+
+    z-index: 99999;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, .90);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    overflow: hidden;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    width: auto;
+    height: auto;
+
+    max-width: 90vw;
+    max-height: 88vh;
+
+    object-fit: contain;
+
+    cursor: zoom-in;
+
+    transition: transform .3s ease;
+
+    user-select: none;
+}
+
+.lightbox img.zoomed {
+    transform: scale(1.5);
+
+    cursor: zoom-out;
+}
+
+.lightbox-close {
+    position: absolute;
+
+    top: 25px;
+    right: 30px;
+
+    z-index: 100000;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(255,255,255,.5);
+
+    background: transparent;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 27px;
+
+    font-weight: 300;
+
+    line-height: 38px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.lightbox-close:hover {
+    background: white;
+
+    color: var(--burgundy);
+}
+
+.lightbox-hint {
+    position: absolute;
+
+    bottom: 22px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: rgba(255,255,255,.55);
+
+    font-size: 7px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    pointer-events: none;
+
+    white-space: nowrap;
 }
 
 
@@ -1074,8 +1208,11 @@ a {
 
     .category {
         gap: 10px;
+
         padding: 12px;
+
         height: auto;
+
         flex-wrap: wrap;
     }
 
@@ -1153,6 +1290,7 @@ a {
 
     .gallery-small-grid {
         grid-template-columns: 1fr 1fr;
+
         grid-template-rows: none;
     }
 
@@ -1181,7 +1319,26 @@ a {
     }
 
     .footer {
-        padding: 0 18px;
+        padding: 10px 18px;
+    }
+
+    .lightbox {
+        padding: 20px;
+    }
+
+    .lightbox img {
+        max-width: 94vw;
+        max-height: 82vh;
+    }
+
+    .lightbox-close {
+        top: 15px;
+        right: 15px;
+    }
+
+    .lightbox-hint {
+        bottom: 15px;
+        font-size: 6px;
     }
 
 }
@@ -1232,7 +1389,6 @@ a {
     </header>
 
 
-
     <!-- =================================================
          HERO
     ================================================== -->
@@ -1242,7 +1398,7 @@ a {
 
         <div class="hero-image">
 
-            <!-- GANTI DENGAN FOTO DENIS -->
+            <!-- FOTO: 7.jpeg -->
 
             <img
                 src="7.jpeg"
@@ -1263,15 +1419,22 @@ a {
             </div>
 
             <h1 class="hero-title">
+
                 <span>Feel</span>
-                <span class="offset">Different.</span>
+
+                <span class="offset">
+                    Different.
+                </span>
+
             </h1>
 
             <p class="hero-copy">
+
                 Vintage references, chic silhouettes,
                 strange colors and statement pieces.
                 I like fashion when it has a little
                 personality of its own.
+
             </p>
 
 
@@ -1290,7 +1453,6 @@ a {
         </div>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1316,7 +1478,6 @@ a {
     </div>
 
 
-
     <!-- =================================================
          ABOUT
     ================================================== -->
@@ -1338,18 +1499,19 @@ a {
             </h2>
 
             <p class="intro-text">
+
                 I'm someone who has always been drawn to fashion.
                 Especially vintage pieces, chic looks and
                 statement items that are slightly unusual.
                 I love experimenting with clothes, discovering
                 new ways to style them and figuring out what
                 makes an outfit feel memorable.
+
             </p>
 
         </div>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1374,9 +1536,13 @@ a {
         <div class="service-grid">
 
 
+            <!-- VINTAGE -->
+
             <article class="service-card">
 
                 <div class="service-photo">
+
+                    <!-- FOTO: 6.jpeg -->
 
                     <img
                         src="6.jpeg"
@@ -1406,10 +1572,13 @@ a {
             </article>
 
 
+            <!-- CHIC -->
 
             <article class="service-card">
 
                 <div class="service-photo">
+
+                    <!-- FOTO: 7.jpeg -->
 
                     <img
                         src="7.jpeg"
@@ -1439,10 +1608,13 @@ a {
             </article>
 
 
+            <!-- STATEMENT -->
 
             <article class="service-card">
 
                 <div class="service-photo">
+
+                    <!-- FOTO: 9.jpeg -->
 
                     <img
                         src="9.jpeg"
@@ -1477,7 +1649,6 @@ a {
     </section>
 
 
-
     <!-- =================================================
          PHILOSOPHY
     ================================================== -->
@@ -1491,21 +1662,27 @@ a {
             </div>
 
             <h2 class="philosophy-title">
+
                 Don't Dress<br>
-                <em>Predictably.</em>
+
+                <em>
+                    Predictably.
+                </em>
+
             </h2>
 
             <p class="philosophy-copy">
+
                 Fashion is one of the easiest ways to experiment
                 with identity. Sometimes that means keeping it
                 classic. Sometimes it means wearing the weirdest
                 thing in the room.
+
             </p>
 
         </div>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1530,10 +1707,12 @@ a {
             </h2>
 
             <p class="editorial-text">
+
                 The goal isn't to follow every trend.
                 It's to find pieces that feel interesting
                 enough to become part of your own visual
                 language.
+
             </p>
 
             <a href="#contact" class="editorial-link">
@@ -1545,6 +1724,8 @@ a {
 
         <div class="editorial-image">
 
+            <!-- FOTO: 9.jpeg -->
+
             <img
                 src="9.jpeg"
                 alt="Fashion editorial"
@@ -1553,7 +1734,6 @@ a {
         </div>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1572,17 +1752,22 @@ a {
                 </div>
 
                 <h2 class="gallery-title">
+
                     <em>Things</em><br>
+
                     Worth Looking At.
+
                 </h2>
 
             </div>
 
 
             <p class="gallery-description">
+
                 A collection of fashion references,
                 styling experiments and visual ideas
                 that inspire the way I create.
+
             </p>
 
         </div>
@@ -1591,7 +1776,11 @@ a {
         <div class="gallery-grid">
 
 
+            <!-- GALLERY BIG -->
+
             <div class="gallery-big">
+
+                <!-- FOTO: 5.jpeg -->
 
                 <img
                     src="5.jpeg"
@@ -1604,7 +1793,11 @@ a {
             <div class="gallery-small-grid">
 
 
+                <!-- GALLERY SMALL 1 -->
+
                 <div class="gallery-small">
+
+                    <!-- FOTO: 1.jpeg -->
 
                     <img
                         src="1.jpeg"
@@ -1614,7 +1807,11 @@ a {
                 </div>
 
 
+                <!-- GALLERY SMALL 2 -->
+
                 <div class="gallery-small">
+
+                    <!-- FOTO: 6.jpeg -->
 
                     <img
                         src="6.jpeg"
@@ -1631,7 +1828,6 @@ a {
     </section>
 
 
-
     <!-- =================================================
          BEAUTY
     ================================================== -->
@@ -1643,6 +1839,8 @@ a {
 
 
             <div class="beauty-photo">
+
+                <!-- FOTO: 6.jpeg -->
 
                 <img
                     src="6.jpeg"
@@ -1659,16 +1857,23 @@ a {
                 </div>
 
                 <h2 class="beauty-title">
+
                     Still<br>
-                    <em>Learning.</em>
+
+                    <em>
+                        Learning.
+                    </em>
+
                 </h2>
 
                 <p class="beauty-text">
+
                     I like makeup too. I'm still learning,
                     experimenting and figuring out what
                     works for me. I'm not a makeup artist,
                     but I genuinely enjoy the process of
                     learning something new.
+
                 </p>
 
                 <div class="beauty-script">
@@ -1681,7 +1886,6 @@ a {
         </div>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1699,16 +1903,22 @@ a {
         </div>
 
         <h2 class="contact-title">
+
             Worth<br>
-            <em>Remembering.</em>
+
+            <em>
+                Remembering.
+            </em>
+
         </h2>
 
         <p class="contact-text">
+
             Open to fashion, beauty, styling, editorial,
             campaign and creative collaborations.
+
         </p>
 
-        <!-- GANTI EMAIL -->
         <a
             href="mailto:creatorhouseid@gmail.com"
             class="contact-button"
@@ -1717,7 +1927,6 @@ a {
         </a>
 
     </section>
-
 
 
     <!-- =================================================
@@ -1742,6 +1951,207 @@ a {
 
 
 </div>
+
+
+<!-- =================================================
+     IMAGE LIGHTBOX / ZOOM
+================================================== -->
+
+<div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+>
+
+
+    <button
+        class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Close image"
+        type="button"
+    >
+        ×
+    </button>
+
+
+    <img
+        id="lightboxImage"
+        src=""
+        alt=""
+    >
+
+
+    <div class="lightbox-hint">
+        Click image to zoom · Click × to close
+    </div>
+
+
+</div>
+
+
+<!-- =================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+
+/* =====================================================
+   LIGHTBOX ELEMENTS
+===================================================== */
+
+const lightbox = document.getElementById("lightbox");
+
+const lightboxImage =
+    document.getElementById("lightboxImage");
+
+const lightboxClose =
+    document.getElementById("lightboxClose");
+
+
+/* =====================================================
+   ALL PORTFOLIO IMAGES
+===================================================== */
+
+const portfolioImages = document.querySelectorAll(
+    ".hero-image img, " +
+    ".service-photo img, " +
+    ".editorial-image img, " +
+    ".gallery-big img, " +
+    ".gallery-small img, " +
+    ".beauty-photo img"
+);
+
+
+/* =====================================================
+   OPEN LIGHTBOX
+===================================================== */
+
+portfolioImages.forEach(function(image) {
+
+    image.addEventListener("click", function() {
+
+        lightboxImage.src = this.src;
+
+        lightboxImage.alt = this.alt;
+
+        lightboxImage.classList.remove("zoomed");
+
+        lightbox.classList.add("active");
+
+        lightbox.setAttribute("aria-hidden", "false");
+
+        document.body.style.overflow = "hidden";
+
+    });
+
+});
+
+
+/* =====================================================
+   IMAGE ZOOM
+===================================================== */
+
+lightboxImage.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        this.classList.toggle("zoomed");
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+lightboxClose.addEventListener(
+    "click",
+    function() {
+
+        closeLightbox();
+
+    }
+);
+
+
+/* =====================================================
+   CLICK OUTSIDE IMAGE
+===================================================== */
+
+lightbox.addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === lightbox) {
+
+            closeLightbox();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeLightbox();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE FUNCTION
+===================================================== */
+
+function closeLightbox() {
+
+    lightbox.classList.remove("active");
+
+    lightbox.setAttribute("aria-hidden", "true");
+
+    lightboxImage.classList.remove("zoomed");
+
+    lightboxImage.src = "";
+
+    lightboxImage.alt = "";
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =====================================================
+   DOUBLE CLICK = ZOOM
+===================================================== */
+
+lightboxImage.addEventListener(
+    "dblclick",
+    function(event) {
+
+        event.stopPropagation();
+
+        this.classList.toggle("zoomed");
+
+    }
+);
+
+
+</script>
 
 
 </body>
